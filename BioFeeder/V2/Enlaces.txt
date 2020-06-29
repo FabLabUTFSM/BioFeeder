@@ -1,0 +1,9 @@
+I2C - Gcode:
+https://reprap.org/wiki/G-code#M260:_i2c_Send_Data
+https://marlinfw.org/docs/gcode/M260.html
+
+I2C Arduino:
+https://www.arduino.cc/en/Tutorial/MasterWriter
+
+Oled:
+https://forum.arduino.cc/index.php?topic=673131.0
