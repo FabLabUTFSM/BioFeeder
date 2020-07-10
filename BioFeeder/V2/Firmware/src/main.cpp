@@ -13,8 +13,8 @@ float keyValue=0; //Key value we are looking to modify in the feeder
 bool i2c;
 int i2cRecieve1;
 String i2cDecoder[] = {"Neumatic Extruder" ,"Stepper Extruder", "-1" ,"1"};
-#define adress 99
 int buf[200];
+#define adress 99
 
 //Encoder variables
 #define CLK 2
@@ -24,7 +24,7 @@ int buf[200];
 
 bool keyValueState = false;
 int lastStateCLK;
-int lastStateSW;
+int stateSW;
 int currentStateCLK;
 
 
@@ -95,7 +95,7 @@ void flag ()
 		  }
 	  }
     lastStateCLK = currentStateCLK;
-  /*if (digitalRead(SW)==!lastStateSW)
+  /*if (digitalRead(SW)==!stateSW)
     {
     unitState= false;
     delay(botonPulse);
@@ -132,7 +132,9 @@ void setup() {
 	pinMode(DT,INPUT);
 	pinMode(SW, INPUT_PULLUP);
 	lastStateCLK = digitalRead(CLK);
-  lastStateSW = digitalRead(SW);
+  stateSW = digitalRead(SW);
+  Serial.print("stateSW: ");
+  Serial.println(stateSW);
   attachInterrupt(digitalPinToInterrupt(CLK),flag,RISING);
 }
 
@@ -146,26 +148,34 @@ void loop() {
   }
 
   //Mostar en pantalla
-  if (digitalRead(SW)==!lastStateSW){
-    keyValueState= true;
+  //Serial.println(digitalRead(true)); //This line makes everythin work, I don't even now what it does, I wroted by mistake
+
+  if (digitalRead(SW)==!stateSW){
     delay(botonPulse);
+    Serial.println("Enter the first if");
+    keyValueState= true;
+    Serial.print("keyValueState: ");
+    Serial.println(keyValueState);
     while (keyValueState)
     {
-      Serial.println("entre");
-      if (digitalRead(SW)==!lastStateSW)
+      Serial.println("Enter while");
+      if (digitalRead(SW)==!stateSW)
         {
         keyValueState= false;
         delay(botonPulse);
+        Serial.println("Enter the second if");
       }
       display.clearDisplay();
       display.setCursor(0, 35);
       display.print("Key Value:");
       display.print(keyValue);
       display.display();
-      /*Serial.print("Key Value: ");
-      Serial.println(keyValue);*/
+      Serial.print("Key Value: ");
+      Serial.println(keyValueState);
   }
+  Serial.print("keyValueState: ");
   Serial.println(keyValueState);
+  Serial.println("out of the first if");
 }
 }
 
