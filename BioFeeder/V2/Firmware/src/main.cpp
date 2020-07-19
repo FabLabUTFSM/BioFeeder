@@ -9,7 +9,7 @@
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 
 //I2C comunication
-float keyValue=0; //Key value we are looking to modify in the feeder
+volatile float keyValue=0; //Key value we are looking to modify in the feeder
 bool i2c;
 int i2cRecieve1;
 String i2cDecoder[] = {"Neumatic Extruder" ,"Stepper Extruder", "-1" ,"1"};
@@ -23,7 +23,7 @@ int buf[200];
 #define botonPulse 250
 
 bool keyValueState = false;
-int lastStateCLK;
+volatile int lastStateCLK;
 int stateSW;
 int currentStateCLK;
 
@@ -45,10 +45,7 @@ float power(float x, int y)
       mult=mult/x;
       Serial.println(mult);
     }
-  return mult;
 }
-
-  
   return mult;
 }
 void getKeyValue()
@@ -154,7 +151,7 @@ void loop() {
     delay(botonPulse);
     Serial.println("Enter the first if");
     keyValueState= true;
-    Serial.print("keyValueState: ");
+    Serial.print("keyValueState 1: ");
     Serial.println(keyValueState);
     while (keyValueState)
     {
@@ -173,7 +170,7 @@ void loop() {
       Serial.print("Key Value: ");
       Serial.println(keyValueState);
   }
-  Serial.print("keyValueState: ");
+  Serial.print("keyValueState 2: ");
   Serial.println(keyValueState);
   Serial.println("out of the first if");
 }
